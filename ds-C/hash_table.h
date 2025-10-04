@@ -13,7 +13,7 @@ typedef struct hash_table_s {
 
 #define DEFAULT_HT_SIZE (53)
 hash_table_t *hash_table_create(const int size);
-void hash_table_destory(hash_table_t *ht);
+void hash_table_destroy(hash_table_t *ht);
 
 void hash_table_delete(hash_table_t *ht, const char *key);
 void hash_table_insert(hash_table_t *ht, const char *key, const char *value);

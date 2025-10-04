@@ -44,6 +44,6 @@ int main() {
     test_delete(ht);
     test_output(ht);
 
-    hash_table_destory(ht);
+    hash_table_destroy(ht);
     return 0;
 }

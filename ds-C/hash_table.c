@@ -12,12 +12,17 @@ static hash_item_t *_hash_item_new(const char *k, const char *v) {
         return NULL;
     }
 
+#ifdef _WIN32
+    i->key = _strdup(k);
+    i->value = _strdup(v);
+#else
     i->key = strdup(k);
     i->value = strdup(v);
+#endif
     return i;
 }
 
-static void _hash_item_destory(hash_item_t *i)
+static void _hash_item_destroy(hash_item_t *i)
 {
     free(i->key);
     free(i->value);
@@ -26,9 +31,9 @@ static void _hash_item_destory(hash_item_t *i)
 
 static int _hash(const char *s, const int a, const int m) {
     long hash = 0;
-    const int len_s = strlen(s);
+    const size_t len_s = strlen(s);
     for (size_t i = 0; i < len_s; ++i) {
-        hash += (long) pow(a, len_s - (i + 1)) * s[i];
+        hash += (long) pow(a, (double)(len_s - (i + 1))) * s[i];
         hash = hash % m;
     }
     return (int) hash;
@@ -62,7 +67,7 @@ static void _hash_table_resize(hash_table_t *ht, const int to_size) {
     ht = new_ht;
     new_ht = tmp;
 
-    hash_table_destory(new_ht);
+    hash_table_destroy(new_ht);
 }
 
 static void _hash_table_resize_down(hash_table_t *ht) {
@@ -87,12 +92,12 @@ hash_table_t *hash_table_create(const int size) {
     return ht;
 }
 
-void hash_table_destory(hash_table_t *ht)
+void hash_table_destroy(hash_table_t *ht)
 {
     for (int i = 0; i < ht->size; i++) {
         hash_item_t *item = ht->items[i];
         if (item != NULL && item != &HASH_DELETE_ITEM) {
-            _hash_item_destory(item);
+            _hash_item_destroy(item);
         }
     }
     free(ht->items);
@@ -111,7 +116,7 @@ void hash_table_delete(hash_table_t *ht, const char *key) {
     while (item != NULL) {
         if (item != &HASH_DELETE_ITEM) {
             if (strcmp(item->key, key) == 0) {
-                _hash_item_destory(item);
+                _hash_item_destroy(item);
                 ht->items[index] = &HASH_DELETE_ITEM;
                 ht->count--;
                 return;
@@ -137,7 +142,7 @@ void hash_table_insert(hash_table_t *ht, const char *key, const char *value) {
     while (cur != NULL) {
         if (cur != &HASH_DELETE_ITEM) {
             if (strcmp(item->key, cur->key) == 0) {
-                _hash_item_destory(cur);
+                _hash_item_destroy(cur);
                 ht->items[index] = item;
                 return;
             }
