@@ -1,12 +1,12 @@
 #include "rbt.h"
 
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <assert.h>
 
 static rbt_node_t *_rbt_node_new(int data) {
-    rbt_node_t *node = (rbt_node_t*)malloc(sizeof(rbt_node_t));
+    rbt_node_t *node = (rbt_node_t *) malloc(sizeof(rbt_node_t));
     if (node == NULL) {
         return NULL;
     }
@@ -30,10 +30,10 @@ static int _rbt_is_red(rbt_node_t *node) {
 
 static rbt_node_t *_rbt_rotate_right(rbt_node_t *node) {
     assert(node != NULL && node->left != NULL);
-    
+
     rbt_node_t *node_left = node->left;
     rbt_node_t *node_left_right = node_left->right;
-    
+
     node_left->right = node;
     node->left = node_left_right;
 
@@ -48,10 +48,10 @@ static rbt_node_t *_rbt_rotate_right(rbt_node_t *node) {
 
 static rbt_node_t *_rbt_rotate_left(rbt_node_t *node) {
     assert(node != NULL && node->right != NULL);
-    
+
     rbt_node_t *node_right = node->right;
     rbt_node_t *node_right_left = node_right->left;
-    
+
     node_right->left = node;
     node->right = node_right_left;
 
@@ -77,7 +77,7 @@ static rbt_node_t *_rbt_insert(rbt_node_t *node, rbt_node_t *parent, int data, r
 
     if (data < node->data) {
         node->left = _rbt_insert(node->left, node, data, new_node);
-    } else if( data > node->data) {
+    } else if (data > node->data) {
         node->right = _rbt_insert(node->right, node, data, new_node);
     }
 
@@ -194,7 +194,7 @@ static rbt_node_t *_insert_fixup(rbt_node_t *root, rbt_node_t *node) {
 }
 
 static void _rbt_node_destroy(rbt_node_t *node) {
-    if(node == NULL) {
+    if (node == NULL) {
         return;
     }
 
@@ -204,7 +204,7 @@ static void _rbt_node_destroy(rbt_node_t *node) {
 }
 
 rbt_t *rbt_new() {
-    rbt_t *rbt = (rbt_t*)malloc(sizeof(rbt_t));
+    rbt_t *rbt = (rbt_t *) malloc(sizeof(rbt_t));
     if (rbt == NULL) {
         return NULL;
     }
@@ -226,7 +226,7 @@ void rbt_insert(rbt_t *rbt, int data) {
     rbt->root = _rbt_insert(rbt->root, NULL, data, &new_node);
 
     if (new_node != NULL) {
-       rbt->root = _insert_fixup(rbt->root, new_node);
+        rbt->root = _insert_fixup(rbt->root, new_node);
     }
 }
 
@@ -243,7 +243,7 @@ rbt_node_t *rbt_search(rbt_t *rbt, int data) {
 }
 
 void rbt_print(rbt_node_t *node) {
-    if(node == NULL) {
+    if (node == NULL) {
         return;
     }
     rbt_print(node->left);

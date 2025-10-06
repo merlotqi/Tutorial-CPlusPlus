@@ -1,7 +1,7 @@
 #include "bst.h"
 #include <stdio.h>
 
-void main() {
+int main() {
     bst_t *bst = bst_new();
 
     bst_insert(bst, 10);
@@ -22,4 +22,6 @@ void main() {
     }
 
     bst_destroy(bst);
+
+    return 0;
 }

@@ -6,7 +6,7 @@ typedef struct bst_node_s {
 } bst_node_t;
 
 typedef struct bst_s {
-    bst_node_t *root; 
+    bst_node_t *root;
 } bst_t;
 
 bst_t *bst_new();

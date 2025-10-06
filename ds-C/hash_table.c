@@ -1,13 +1,13 @@
 #include "hash_table.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
 #include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-static hash_item_t HASH_DELETE_ITEM = { NULL, NULL };
+static hash_item_t HASH_DELETE_ITEM = {NULL, NULL};
 
 static hash_item_t *_hash_item_new(const char *k, const char *v) {
-    hash_item_t *i = (hash_item_t *)malloc(sizeof(hash_item_t));
+    hash_item_t *i = (hash_item_t *) malloc(sizeof(hash_item_t));
     if (!i) {
         return NULL;
     }
@@ -22,8 +22,7 @@ static hash_item_t *_hash_item_new(const char *k, const char *v) {
     return i;
 }
 
-static void _hash_item_destroy(hash_item_t *i)
-{
+static void _hash_item_destroy(hash_item_t *i) {
     free(i->key);
     free(i->value);
     free(i);
@@ -33,7 +32,7 @@ static int _hash(const char *s, const int a, const int m) {
     long hash = 0;
     const size_t len_s = strlen(s);
     for (size_t i = 0; i < len_s; ++i) {
-        hash += (long) pow(a, (double)(len_s - (i + 1))) * s[i];
+        hash += (long) pow(a, (double) (len_s - (i + 1))) * s[i];
         hash = hash % m;
     }
     return (int) hash;
@@ -56,7 +55,7 @@ static void _hash_table_resize(hash_table_t *ht, const int to_size) {
         exit(-1);
     }
 
-    for(int i = 0; i < ht->size; ++i) {
+    for (int i = 0; i < ht->size; ++i) {
         hash_item_t *item = ht->items[i];
         if (item != NULL && item != &HASH_DELETE_ITEM) {
             hash_table_insert(new_ht, item->key, item->value);
@@ -82,18 +81,17 @@ static void _hash_table_resize_up(hash_table_t *ht) {
 
 
 hash_table_t *hash_table_create(const int size) {
-    hash_table_t *ht = (hash_table_t *)malloc(sizeof(hash_table_t));
+    hash_table_t *ht = (hash_table_t *) malloc(sizeof(hash_table_t));
     if (!ht) {
         return NULL;
     }
     ht->size = size;
     ht->count = 0;
-    ht->items = (hash_item_t **)calloc((size_t)ht->size, sizeof(hash_item_t *));
+    ht->items = (hash_item_t **) calloc((size_t) ht->size, sizeof(hash_item_t *));
     return ht;
 }
 
-void hash_table_destroy(hash_table_t *ht)
-{
+void hash_table_destroy(hash_table_t *ht) {
     for (int i = 0; i < ht->size; i++) {
         hash_item_t *item = ht->items[i];
         if (item != NULL && item != &HASH_DELETE_ITEM) {

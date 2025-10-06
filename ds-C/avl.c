@@ -1,7 +1,7 @@
 #include "avl.h"
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <assert.h>
 
 #ifndef MAX
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
@@ -22,7 +22,7 @@ static void _avl_update_height(avl_node_t *node) {
 }
 
 static avl_node_t *_avl_node_new(int data) {
-    avl_node_t *node = (avl_node_t *)malloc(sizeof(avl_node_t));
+    avl_node_t *node = (avl_node_t *) malloc(sizeof(avl_node_t));
     node->data = data;
     node->left = NULL;
     node->right = NULL;
@@ -39,10 +39,10 @@ static void _avl_destroy_node(avl_node_t *node) {
 
 static avl_node_t *_avl_rotate_right(avl_node_t *node) {
     assert(node != NULL && node->left != NULL);
-    
+
     avl_node_t *node_left = node->left;
     avl_node_t *node_left_right = node_left->right;
-    
+
     node_left->right = node;
     node->left = node_left_right;
 
@@ -54,10 +54,10 @@ static avl_node_t *_avl_rotate_right(avl_node_t *node) {
 
 static avl_node_t *_avl_rotate_left(avl_node_t *node) {
     assert(node != NULL && node->right != NULL);
-    
+
     avl_node_t *node_right = node->right;
     avl_node_t *node_right_left = node_right->left;
-    
+
     node_right->left = node;
     node->right = node_right_left;
 
@@ -108,7 +108,7 @@ static avl_node_t *_avl_insert(avl_node_t *node, int data) {
     } else if (data > node->data) {
         node->right = _avl_insert(node->right, data);
     } else {
-        return node; // duplicate
+        return node;// duplicate
     }
 
     return _avl_balance(node);
@@ -138,9 +138,9 @@ static avl_node_t *_avl_delete(avl_node_t *node, int data) {
         while (temp->left != NULL) {
             temp = temp->left;
         }
-            node->data = temp->data;
-            node->right = _avl_delete(node->right, temp->data);
-        }
+        node->data = temp->data;
+        node->right = _avl_delete(node->right, temp->data);
+    }
     return _avl_balance(node);
 }
 
@@ -159,7 +159,7 @@ static avl_node_t *_avl_search(avl_node_t *node, int value) {
 }
 
 avl_tree_t *avl_new() {
-    avl_tree_t *tree = (avl_tree_t *)malloc(sizeof(avl_tree_t));
+    avl_tree_t *tree = (avl_tree_t *) malloc(sizeof(avl_tree_t));
     if (tree == NULL) {
         return NULL;
     }

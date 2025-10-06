@@ -13,3 +13,4 @@ add_subdirectory(asio_server)
 add_subdirectory(delegate-tutorial)
 
 add_subdirectory(ds-C)
+add_subdirectory(hash-algorithm)

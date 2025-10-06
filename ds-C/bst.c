@@ -1,7 +1,7 @@
 #include "bst.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdio.h>
 
 static bst_node_t *_bst_node_new(int data) {
     bst_node_t *node = malloc(sizeof(bst_node_t));
@@ -16,7 +16,7 @@ static bst_node_t *_bst_insert(bst_node_t *node, int value) {
         return _bst_node_new(value);
     }
 
-    if(value < node->data) {
+    if (value < node->data) {
         node->left = _bst_insert(node->left, value);
     } else {
         node->right = _bst_insert(node->right, value);
