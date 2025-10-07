@@ -1,4 +1,4 @@
-#include "hash.h"
+#include "md5.h"
 #include <string.h>
 
 #define F(x, y, z) (((x) & (y)) | (~(x) & (z)))

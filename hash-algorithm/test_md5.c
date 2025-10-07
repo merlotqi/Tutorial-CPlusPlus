@@ -1,4 +1,4 @@
-#include "hash.h"
+#include "md5.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -34,6 +34,7 @@ int main() {
     printf("MD5(\"message digest\") = ");
     print_digest(digest);
 
+    // stream api
     md5_ctx_t ctx;
     md5_init(&ctx);
     md5_update(&ctx, (uint8_t *) "Hello, ", 7);

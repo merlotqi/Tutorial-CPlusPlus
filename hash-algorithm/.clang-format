@@ -70,5 +70,5 @@ AlignArrayOfStructures: Right
 IndentCaseBlocks: true
 IndentExternBlock: Indent
 IndentPPDirectives: None
-AllowShortEnumsOnASingleLine: true
+AllowShortEnumsOnASingleLine: false
 AlignEscapedNewlines: Left
