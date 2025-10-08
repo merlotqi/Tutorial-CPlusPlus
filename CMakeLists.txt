@@ -14,3 +14,4 @@ add_subdirectory(delegate-tutorial)
 
 add_subdirectory(ds-C)
 add_subdirectory(hash-algorithm)
+add_subdirectory(queue)
