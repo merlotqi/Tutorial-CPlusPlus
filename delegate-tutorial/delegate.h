@@ -6,6 +6,7 @@
 #include <optional>
 #include <type_traits>
 #include <vector>
+#include <mutex>
 
 // Primary template declaration
 template<typename>
@@ -409,9 +410,7 @@ public:
     {
         if (this != &other)
         {
-            std::lock_guard<std::mutex> lock1(mutex_, std::defer_lock);
-            std::lock_guard<std::mutex> lock2(other.mutex_, std::defer_lock);
-            std::lock(lock1, lock2);
+            std::scoped_lock lock(mutex_, other.mutex_);
 
             delegates.clear();
             for (const auto &delegate: other.delegates)
